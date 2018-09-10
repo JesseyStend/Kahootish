@@ -100,6 +100,6 @@ server.on('error', (err) => {
   io.emit('message', "server Error: " + err);
 });
 
-server.listen(port, () => {
-  console.log("RPS started on " + port);
+server.listen(process.env.PORT || port, () => {
+  console.log("RPS started on " + process.env.PORT || port);
 });
