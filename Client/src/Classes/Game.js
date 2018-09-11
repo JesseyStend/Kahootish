@@ -66,6 +66,7 @@ class Game {
       }
 
       if (this._amountVoted >= players.length) {
+        this._amountVoted = 0;
         this.NextRound();
       }
     });
@@ -178,6 +179,7 @@ class Game {
         },10);
         break;
       case "Choose":
+        //this.votes = [];
         this._awnserTab.innerHTML = "";
         sock.emit('SendAwnsers', this._awnsers, assignedPincode);
         for (var i = 0; i < this._awnsers.length; i++) {
@@ -192,6 +194,7 @@ class Game {
         }
         break;
       case "Show":
+        this._leaderboard.innerHTML = "";
         this.RankVotes();
         this.RankPlayers();
         this._prevousWinnerText.innerHTML = "PrevousWinner: " + this._prevousWinner;

@@ -3,7 +3,7 @@ const express = require('express');
 const socketio = require('socket.io');
 const Lobby = require('./Classes/Lobby.js');
 const gpc = require('generate-pincode');
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 const app = express();
 
@@ -38,7 +38,7 @@ io.on('connection', (sock) => {
   sock.on('JoinGame', (pincode, name) => {
     let found = false;
     for (var i = 0; i < lobbys.length; i++) {
-      if (pincode = lobbys[i].pincode) {
+      if (pincode == lobbys[i].pincode) {
         found = "true";
         lobbys[i].Join(sock);
         let payload = {
@@ -101,5 +101,5 @@ server.on('error', (err) => {
 });
 
 server.listen(process.env.PORT || port, () => {
-  console.log("RPS started on " + process.env.PORT || port);
+  console.log("RPS started on " + port);
 });

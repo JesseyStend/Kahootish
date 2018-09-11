@@ -6,6 +6,7 @@ const turns = ["Awnser", "Choose", "Show"];
 let currentPin;
 let joined = false;
 let currentTurn = "";
+let myName = null;
 
 for (var i = 0; i < turns.length; i++) {
   document.getElementById(turns[i]).style.display = 'none';
@@ -13,8 +14,8 @@ for (var i = 0; i < turns.length; i++) {
 
 document.getElementById('Submit').onclick = () => {
     console.log("Joining game");
-    sock.emit('JoinGame', document.getElementById('PinInput').value, document.getElementById('NameInput').value);
-    PinForm.style.visibility = 'hidden';
+    myName = document.getElementById('NameInput').value;
+    sock.emit('JoinGame', document.getElementById('PinInput').value, myName);
 };
 
 document.getElementById('GameSubmit').onclick = () =>{
@@ -61,8 +62,11 @@ sock.on('Joined', (pincode) => {
   console.log("Game joined");
   currentPin = pincode;
   joined = true;
+  document.getElementById('name').innerHTML = "Your name: " + myName;
+  PinForm.style.visibility = 'hidden';
 });
 
 sock.on('FailedToJoin', () => {
   console.error("Failed to join, unkown pin");
+  document.getElementById('name').innerHTML = "Failed to join, unkown pin";
 });

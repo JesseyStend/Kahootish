@@ -14,7 +14,7 @@ class Player {
   }
 
   AddToScore(amount){
-    this._score = amount;
+    this._score+= amount;
   }
 
   get id (){
