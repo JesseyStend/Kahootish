@@ -5,7 +5,7 @@ class Game {
     this._currentRound = this._turns[this._currentRoundid];
     this._timer = document.getElementById('Timer');
     this._timervalue = document.getElementById('Timerdepleated')
-    this._questions = ["Are roses red?","Is the sea blue?"];
+    this._questions = ["___ was invented in Nazi Germany.","Woman get turned on by ___.?", "___, the latest Facebook craze." + "The best way to find Malaysia Airlines Flight MH370 may be with ____", "___ burns 360 calories per hour"];
     this._questionsindex = 0;
     this._awnsers = [];
     this._awnsersTab = document.getElementById('Awnsers');
