@@ -6,16 +6,10 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,26 +20,23 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import createGame from "@/app/actions/createGame";
 
-const formSchema = z.object({
-  name: z.string().min(2),
+export const createGameFormSchema = z.object({
+  roundsAmount: z.number().min(5),
 });
 
 export default function CreateGameForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof createGameFormSchema>>({
+    resolver: zodResolver(createGameFormSchema),
     defaultValues: {
-      name: "",
+      roundsAmount: 5,
     },
-  });
-
-  const onSubmit = form.handleSubmit((data) => {
-    console.log(data);
   });
 
   return (
     <Form {...form}>
-      <form onSubmit={onSubmit} className="min-h-[400px]">
+      <form action={createGame} className="min-h-[400px]">
         <Card>
           <CardHeader className="text-center">
             <CardTitle>Create a game</CardTitle>
@@ -53,12 +44,12 @@ export default function CreateGameForm() {
           <CardContent>
             <FormField
               control={form.control}
-              name="name"
+              name="roundsAmount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Game name</FormLabel>
+                  <FormLabel>Game rounds</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

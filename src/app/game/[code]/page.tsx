@@ -10,10 +10,21 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import prisma from "@/lib/prisma";
 import { LoaderIcon } from "lucide-react";
+import { redirect } from "next/navigation";
 
-export default async function GamePage() {
+export default async function GamePage(reg: { params: { code: string } }) {
+  const { code } = reg.params;
+
+  const game = await prisma.game.findUnique({
+    where: { code },
+  });
+
+  if (!game) {
+    redirect("/404");
+  }
+
   return (
     <div className="flex flex-1 items-center justify-center">
       <div className="flex flex-col gap-4">
@@ -23,7 +34,11 @@ export default async function GamePage() {
           </CardHeader>
           <CardContent>
             <Label className="text-muted-foreground">Round amount</Label>
-            <Input type="number" defaultValue={10} className="text-ms" />
+            <Input
+              type="number"
+              defaultValue={game.roundsAmount}
+              className="text-ms"
+            />
           </CardContent>
         </Card>
         <Card className="flex flex-col px-8">
